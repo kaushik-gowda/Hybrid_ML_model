@@ -23,19 +23,18 @@ The dataset is based on the stock market data
         - Appropriate Optimizer
         - Loss function
     - Fit into the training data.
-     
-
-
 
 3. Linear Regression
     - It captures Simple linear realationships and long term trends in data.
-
-
-
-
-
+    - Generating the lagged features for linear regression.
+    - splitting data into training and testing.
+    - training the model
+    
 
 4. Combination
     - lSTM's Ability to model complex time-dependent patterns.
     - Linear Regression's Ability to identify and follow broader trends.
     - Create a more balanced and accurate prediction system.
+    - make prediction using LSTM on test set and inverse transform the scaled prediction.
+    - make prediction using Linear Regression on test set and inverse transform the scaled prediction.
+    - 

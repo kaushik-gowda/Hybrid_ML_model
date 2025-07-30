@@ -37,4 +37,5 @@ The dataset is based on the stock market data
     - Create a more balanced and accurate prediction system.
     - make prediction using LSTM on test set and inverse transform the scaled prediction.
     - make prediction using Linear Regression on test set and inverse transform the scaled prediction.
-    - 
+    - Combine both the models for prediction.
+    

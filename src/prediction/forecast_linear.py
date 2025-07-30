@@ -1,14 +1,26 @@
 import numpy as np
-import pandas as pd
 
 
-def forecast_linear(model, recent_data, scaler, steps=10):
-    feature_names = ['Lag_1', 'Lag_2', 'Lag_3']
+def forecast_with_linear(model, recent_data, n_future, scaler):
+    """
+    Forecast future values using a trained Linear Regression model.
+    
+    Args:
+        model: Trained linear model.
+        recent_data: Most recent input sequence (scaled).
+        n_future: Number of time steps to forecast.
+        scaler: Scaler used for inverse transformation.
+
+    Returns:
+        Array of forecasted values (inverse transformed).
+    """
     predictions = []
-    data = recent_data.copy()
-    for _ in range(steps):
-        input_df = pd.DataFrame([data], columns=feature_names)
-        pred = model.predict(input_df)[0]
-        predictions.append(pred)
-        data = np.append(data[1:], pred)
+    current_input = recent_data.copy()
+
+    for _ in range(n_future):
+        input_reshaped = current_input.reshape(1, -1)
+        prediction = model.predict(input_reshaped)[0]
+        predictions.append(prediction)
+        current_input = np.append(current_input[1:], prediction)
+
     return scaler.inverse_transform(np.array(predictions).reshape(-1, 1))

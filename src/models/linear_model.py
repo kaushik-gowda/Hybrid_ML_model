@@ -2,7 +2,8 @@ from sklearn.linear_model import LinearRegression
 import joblib
 
 
-def build_linear_regression(X_train, y_train):
+def train_linear_model(X_train, y_train):
+    """Train a simple linear regression model."""
     model = LinearRegression()
     model.fit(X_train, y_train)
     return model

@@ -1,57 +1,59 @@
-import pandas as pd
-import numpy as np
 import os
-import logging
 import joblib
 import yaml
-
+import pandas as pd
+from src.utils.logger import logging
+from src.utils.exception import CustomException
+from src.exception import CustomException
+from src.logger import logging
 
 def add_lag_features(data, lags=[1, 2, 3]):
     """Create lag features for time series data."""
-    for lag in lags:
-        data[f'Lag_{lag}'] = data['Close'].shift(lag)
-    return data.dropna()
+    try:
+        for lag in lags:
+            data[f'Lag_{lag}'] = data['Close'].shift(lag)
+        return data.dropna()
+    except Exception as e:
+        raise CustomException(e, sys)
 
 
 def train_test_split_time_series(X, y, train_ratio=0.8):
     """Split time series data without shuffling."""
-    train_size = int(len(X) * train_ratio)
-    X_train, X_test = X[:train_size], X[train_size:]
-    y_train, y_test = y[:train_size], y[train_size:]
-    return X_train, X_test, y_train, y_test
-
-
-def setup_logger(name=__name__, log_file='logs/app.log', level=logging.INFO):
-    """Set up a logger that writes to a file and console."""
-    os.makedirs(os.path.dirname(log_file), exist_ok=True)
-    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-
-    handler = logging.FileHandler(log_file)
-    handler.setFormatter(formatter)
-
-    console = logging.StreamHandler()
-    console.setFormatter(formatter)
-
-    logger = logging.getLogger(name)
-    logger.setLevel(level)
-    logger.addHandler(handler)
-    logger.addHandler(console)
-
-    return logger
+    try:
+        train_size = int(len(X) * train_ratio)
+        X_train, X_test = X[:train_size], X[train_size:]
+        y_train, y_test = y[:train_size], y[train_size:]
+        return X_train, X_test, y_train, y_test
+    except Exception as e:
+        raise CustomException(e, sys)
 
 
 def save_model(model, filepath):
     """Save model to disk using joblib."""
-    os.makedirs(os.path.dirname(filepath), exist_ok=True)
-    joblib.dump(model, filepath)
+    try:
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+        joblib.dump(model, filepath)
+        logging.info(f"Model saved at: {filepath}")
+    except Exception as e:
+        raise CustomException(e, sys)
 
 
 def load_model(filepath):
     """Load model from disk using joblib."""
-    return joblib.load(filepath)
+    try:
+        model = joblib.load(filepath)
+        logging.info(f"Model loaded from: {filepath}")
+        return model
+    except Exception as e:
+        raise CustomException(e, sys)
 
 
 def load_config(path='config.yaml'):
     """Load a YAML configuration file."""
-    with open(path, 'r') as file:
-        return yaml.safe_load(file)
+    try:
+        with open(path, 'r') as file:
+            config = yaml.safe_load(file)
+            logging.info("Configuration file loaded successfully.")
+            return config
+    except Exception as e:
+        raise CustomException(e, sys)

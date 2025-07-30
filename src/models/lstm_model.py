@@ -1,12 +1,11 @@
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense, Input
+from tensorflow.keras.layers import LSTM, Dense
 
 
-def build_lstm(input_shape):
+def create_lstm_model(input_shape):
+    """Create and compile an LSTM model."""
     model = Sequential()
-    model.add(Input(shape=input_shape))
-    model.add(LSTM(units=50, return_sequences=True))
-    model.add(LSTM(units=50))
+    model.add(LSTM(units=50, return_sequences=False, input_shape=input_shape))
     model.add(Dense(1))
     model.compile(optimizer='adam', loss='mean_squared_error')
     return model

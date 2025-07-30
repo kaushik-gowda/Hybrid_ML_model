@@ -45,3 +45,35 @@ The dataset is based on the stock market data
     3. Comparing the actual vs Predictions using multi-line
     4. Future prediction comparison 
     5. Evaluating the model residuals using histogram
+
+project_root/
+├── data/
+│   └── apple_stock.csv
+│
+├── src/
+│   ├── data/
+│   │   └── load_data.py              # Load CSV and convert 'Date' column, set index
+│   │
+│   ├── preprocessing/
+│   │   └── scale_and_sequence.py     # Apply MinMaxScaler, create sequences
+│   │
+│   ├── models/
+│   │   ├── lstm_model.py             # Build and train LSTM model
+│   │   └── linear_model.py           # Create lags, train Linear Regression model
+│   │
+│   ├── prediction/
+│   │   ├── forecast_lstm.py          # Predict future using LSTM model
+│   │   ├── forecast_linear.py        # Predict future using Linear Regression model
+│   │   └── forecast_hybrid.py        # Combine both predictions into Hybrid output
+│   │
+│   ├── visualization/
+│   │   └── plot_results.py           # Plot actual vs predicted values
+│   │
+│   ├── utils/
+│   │   └── common.py                 # Utility functions if needed
+│   │
+│   └── __init__.py
+│
+├── main.py                          # Orchestrates data loading, training, prediction, plotting
+├── requirements.txt
+└── README.md

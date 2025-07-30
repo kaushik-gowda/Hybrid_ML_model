@@ -38,4 +38,10 @@ The dataset is based on the stock market data
     - make prediction using LSTM on test set and inverse transform the scaled prediction.
     - make prediction using Linear Regression on test set and inverse transform the scaled prediction.
     - Combine both the models for prediction.
-    
+
+5. Visualization using matplotlib
+    1. Visualizing the raw scaled data using Line plot
+    2. Checking the Train-Test Boundary using vline
+    3. Comparing the actual vs Predictions using multi-line
+    4. Future prediction comparison 
+    5. Evaluating the model residuals using histogram

@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
+import tensorflow as tf
 from src.data.load_data import load_stock_data
 from src.preprocessing.scale_and_sequence import prepare_lstm_data, scale_data
 from src.models.lstm_model import create_lstm_model
@@ -10,9 +11,28 @@ from src.prediction.forecast_linear import forecast_with_linear
 from src.prediction.forecast_hybrid import forecast_with_hybrid
 from src.visualization.plot_results import plot_predictions
 from src.utils import add_lag_features, train_test_split_time_series
-from src.logger import logging
+from src import logger
 from src.exception import CustomException
+import logging
 import sys
+
+
+# Get path to the current log file
+log_file_path = logger.get_log_path()
+
+# Open the log file in append mode
+log_file = open(log_file_path, "a")
+
+# Redirect stdout and stderr to log file
+os.dup2(log_file.fileno(), sys.stdout.fileno())
+os.dup2(log_file.fileno(), sys.stderr.fileno())
+
+# Optional: Limit TensorFlow verbosity
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+
+
+if __name__ == "__main__":
+    logging.info("Main script started.")
 
 
 def main():
@@ -74,9 +94,3 @@ def main():
 
     except Exception as e:
         raise CustomException(e, sys)
-
-
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-
-if __name__ == "__main__":
-    logging.info("Main script started.")

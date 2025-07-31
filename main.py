@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import os
 import tensorflow as tf
+from src.data import load_data
 from src.data.load_data import load_stock_data
 from src.preprocessing.scale_and_sequence import prepare_lstm_data, scale_data
 from src.models.lstm_model import create_lstm_model
@@ -11,6 +12,7 @@ from src.prediction.forecast_linear import forecast_with_linear
 from src.prediction.forecast_hybrid import forecast_with_hybrid
 from src.visualization.plot_results import plot_predictions
 from src.utils import add_lag_features, train_test_split_time_series
+from src.utils import prepare_data, load_data
 from src import logger
 from src.exception import CustomException
 import logging
@@ -107,3 +109,22 @@ X_val = np.random.rand(20, 5)
 y_val = np.random.rand(20)
 
 train_linear_model(X_train, y_train, X_val, y_val)
+
+
+if __name__ == "__main__":
+    logging.info("Pipeline started.")
+
+    df = load_data()  # Your data loading function
+    X_train, X_val, y_train, y_val = prepare_data(df)  # Split your data
+
+    model = train_lstm_model(X_train, y_train, X_val, y_val)
+
+    # Dummy prediction and plotting (replace with actual predictions)
+    dates = np.arange(10)
+    lstm_preds = np.random.rand(10)
+    lin_preds = np.random.rand(10)
+    hybrid_preds = np.random.rand(10)
+
+    plot_predictions(dates, lstm_preds, lin_preds, hybrid_preds)
+
+    logging.info("Pipeline completed.")

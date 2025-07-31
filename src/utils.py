@@ -7,6 +7,15 @@ from src.logger import logging
 import sys
 
 
+def load_data(path='notebook/data/apple_stock.csv'):
+    logging.info(f"Loading data from {path}")
+    return pd.read_csv(path)
+
+
+def prepare_data(df, look_back=10, test_size=0.2):
+    logging.info("Preparing time-series data...")
+
+
 def add_lag_features(data, lags=[1, 2, 3]):
     """Create lag features for time series data."""
     try:

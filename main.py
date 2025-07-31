@@ -94,3 +94,16 @@ def main():
 
     except Exception as e:
         raise CustomException(e, sys)
+
+
+# Create artifacts folder
+artifacts_dir = os.path.join(os.getcwd(), "artifacts")
+os.makedirs(artifacts_dir, exist_ok=True)
+logging.info(f"Artifacts directory created at: {artifacts_dir}")
+
+X_train = np.random.rand(100, 5)
+y_train = np.random.rand(100)
+X_val = np.random.rand(20, 5)
+y_val = np.random.rand(20)
+
+train_linear_model(X_train, y_train, X_val, y_val)
